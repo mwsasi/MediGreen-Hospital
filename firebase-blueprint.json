@@ -1,0 +1,70 @@
+{
+  "entities": {
+    "users": {
+      "title": "User",
+      "description": "User profile information.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["patient", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "doctors": {
+      "title": "Doctor",
+      "description": "Doctor profile information.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "specialty": { "type": "string" },
+        "department": { "type": "string" },
+        "experience": { "type": "string" },
+        "image": { "type": "string" },
+        "available": { "type": "boolean" }
+      },
+      "required": ["id", "name", "specialty", "department"]
+    },
+    "appointments": {
+      "title": "Appointment",
+      "description": "Appointment booking information.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "patientId": { "type": "string" },
+        "patientName": { "type": "string" },
+        "doctorId": { "type": "string" },
+        "doctorName": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "time": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled", "completed"] },
+        "reminderSent": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["patientId", "doctorId", "date", "time", "status"]
+    },
+    "reports": {
+      "title": "Report",
+      "description": "Patient medical reports.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "patientId": { "type": "string" },
+        "title": { "type": "string" },
+        "fileUrl": { "type": "string" },
+        "uploadedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["patientId", "title", "fileUrl"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": { "schema": "users", "description": "User profiles." },
+    "/doctors/{id}": { "schema": "doctors", "description": "Doctor profiles." },
+    "/appointments/{id}": { "schema": "appointments", "description": "Appointment bookings." },
+    "/reports/{id}": { "schema": "reports", "description": "Patient reports." }
+  }
+}
